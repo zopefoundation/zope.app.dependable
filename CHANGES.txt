@@ -5,6 +5,9 @@ CHANGES
 3.5.2 (unreleased)
 ------------------
 
+- Added `tox.ini` and manifest.
+
+- Removed zope.app.testing dependency.
 
 3.5.1 (2009-12-15)
 ------------------

@@ -18,10 +18,9 @@ $Id$
 from unittest import TestCase, TestSuite, main, makeSuite
 
 from zope.annotation.attribute import AttributeAnnotations
-from zope.app.testing.placelesssetup import PlacelessSetup
-from zope.interface import implements
+from zope.location.interfaces import ILocationInfo
+from zope.interface import implements, verify
 from zope.lifecycleevent import ObjectRemovedEvent
-from zope.traversing.interfaces import IPhysicallyLocatable
 
 from zope.app.dependable.dependency import CheckDependency
 from zope.app.dependable.interfaces import IDependable, DependencyError
@@ -33,7 +32,7 @@ class C(object):
 
 class DummyObject(object):
 
-    implements(IDependable, IPhysicallyLocatable)
+    implements(IDependable, ILocationInfo)
 
     def dependents(self):
         return ['dependency1', 'dependency2']
@@ -42,17 +41,15 @@ class DummyObject(object):
         return '/dummy-object'
 
 
-class Test(PlacelessSetup, TestCase):
+class Test(TestCase):
 
     def factory(self):
         from zope.app.dependable import Dependable
         return Dependable(AttributeAnnotations(C()))
 
     def testVerifyInterface(self):
-        from zope.interface.verify import verifyObject
-        from zope.app.dependable.interfaces import IDependable
         object = self.factory()
-        verifyObject(IDependable, object)
+        verify.verifyObject(IDependable, object)
 
     def testBasic(self):
         dependable = self.factory()
