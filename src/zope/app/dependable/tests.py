@@ -12,14 +12,13 @@
 #
 ##############################################################################
 """Unit tests for Dependable class.
-
-$Id$
 """
-from unittest import TestCase, TestSuite, main, makeSuite
+from __future__ import print_function, absolute_import, division
+import unittest
 
 from zope.annotation.attribute import AttributeAnnotations
 from zope.location.interfaces import ILocationInfo
-from zope.interface import implements, verify
+from zope.interface import implementer, verify
 from zope.lifecycleevent import ObjectRemovedEvent
 
 from zope.app.dependable.dependency import CheckDependency
@@ -30,9 +29,8 @@ class C(object):
     pass
 
 
+@implementer(IDependable, ILocationInfo)
 class DummyObject(object):
-
-    implements(IDependable, ILocationInfo)
 
     def dependents(self):
         return ['dependency1', 'dependency2']
@@ -41,7 +39,7 @@ class DummyObject(object):
         return '/dummy-object'
 
 
-class Test(TestCase):
+class Test(unittest.TestCase):
 
     def factory(self):
         from zope.app.dependable import Dependable
@@ -92,9 +90,8 @@ class Test(TestCase):
 
 
 def test_suite():
-    return TestSuite((
-        makeSuite(Test),
-        ))
+    return unittest.defaultTestLoader.loadTestsFromName(__name__)
+
 
 if __name__=='__main__':
-    main(defaultTest='test_suite')
+    unittest.main(defaultTest='test_suite')

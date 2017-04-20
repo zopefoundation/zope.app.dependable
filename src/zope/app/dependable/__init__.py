@@ -13,11 +13,11 @@
 ##############################################################################
 """Dependable Framework.
 
-$Id$
 """
+from __future__ import print_function, absolute_import, division
 __docformat__ = 'restructuredtext'
 
-from zope.interface import implements
+from zope.interface import implementer
 from zope.traversing.api import getParent, canonicalPath, getPath
 from zope.annotation.interfaces import IAnnotations
 
@@ -53,7 +53,7 @@ class PathSetAnnotation(object):
         path = self._make_relative(path)
         annotations = IAnnotations(self.context)
         old = annotations.get(self.key, ())
-        fixed = map(self._make_relative, old)
+        fixed = [self._make_relative(o) for o in old]
         if path not in fixed:
             fixed.append(path)
         new = tuple(fixed)
@@ -65,7 +65,7 @@ class PathSetAnnotation(object):
         annotations = IAnnotations(self.context)
         old = annotations.get(self.key, ())
         if old:
-            fixed = map(self._make_relative, old)
+            fixed = [self._make_relative(o) for o in old]
             fixed = [loc for loc in fixed if loc != path]
             new = tuple(fixed)
             if new != old:
@@ -93,11 +93,9 @@ class PathSetAnnotation(object):
             path = self.pp + path
         return path
 
-
+@implementer(IDependable)
 class Dependable(PathSetAnnotation):
     """See `IDependable`."""
-
-    implements(IDependable)
 
     key = "zope.app.dependable.Dependents"
 

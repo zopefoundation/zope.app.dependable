@@ -16,6 +16,8 @@
 on an object having dependencies. It raises an exception if it's the
 case.
 """
+from __future__ import print_function, absolute_import, division
+
 __docformat__ = 'restructuredtext'
 
 from zope.i18nmessageid import Message
@@ -44,4 +46,3 @@ def CheckDependency(event):
                 "dependents": ", ".join(dependents)
                 }
             raise DependencyError(Message(exception_msg, mapping=mapping))
-

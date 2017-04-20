@@ -2,8 +2,12 @@
 CHANGES
 =======
 
-3.5.2 (unreleased)
+4.0.0 (unreleased)
 ------------------
+
+- Add support for Python 3.5 and 3.6 and PyPy.
+
+- Removed support for Python 2.6.
 
 - Added `tox.ini` and manifest.
 
