@@ -37,6 +37,7 @@ class PathSetAnnotation(object):
             parent = getParent(self.context)
         except TypeError:
             parent = None
+
         if parent is not None:
             try:
                 pp = getPath(parent)
@@ -84,7 +85,11 @@ class PathSetAnnotation(object):
             path = canonicalPath(path)
             if path.startswith(self.pp):
                 path = path[self.pplen:]
-                while path.startswith("/"):
+                while path.startswith("/"): # pragma: no cover
+                    # We should not be able to get here. canonicalPath
+                    # doesn't allow trailing / in a path segment, and we
+                    # already cut off the whole length of the parent, which
+                    # we guaranteed to begin and end with a /
                     path = path[1:]
         return path
 

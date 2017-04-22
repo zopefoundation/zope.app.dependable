@@ -18,9 +18,14 @@ import unittest
 
 from zope.annotation.attribute import AttributeAnnotations
 from zope.location.interfaces import ILocationInfo
-from zope.interface import implementer, verify
+from zope.interface import implementer, verify, directlyProvides
 from zope.lifecycleevent import ObjectRemovedEvent
 
+from zope.location.interfaces import ILocationInfo
+
+from zope.testing.cleanup import CleanUp
+
+import zope.app.dependable
 from zope.app.dependable.dependency import CheckDependency
 from zope.app.dependable.interfaces import IDependable, DependencyError
 
@@ -39,11 +44,11 @@ class DummyObject(object):
         return '/dummy-object'
 
 
-class Test(unittest.TestCase):
+class TestDependable(unittest.TestCase):
 
-    def factory(self):
+    def factory(self, obj=None):
         from zope.app.dependable import Dependable
-        return Dependable(AttributeAnnotations(C()))
+        return Dependable(obj if obj is not None else AttributeAnnotations(C()))
 
     def testVerifyInterface(self):
         object = self.factory()
@@ -87,6 +92,47 @@ class Test(unittest.TestCase):
         parent = object()
         event = ObjectRemovedEvent(obj, parent, 'oldName')
         self.assertRaises(DependencyError, CheckDependency, event)
+
+    def testWithParent(self):
+        grandparent = C()
+        grandparent.__name__ = 'root'
+
+        parent = C()
+        parent.__name__ = 'parent'
+        parent.__parent__ = grandparent
+
+        obj = AttributeAnnotations(C())
+        obj.__parent__ = parent
+        obj.__name__ = 'obj'
+
+        from zope.traversing.api import getPath
+
+        # If we can't get the parent path, it's just /
+        dependable = self.factory(obj)
+        self.assertEqual('/', dependable.pp)
+
+        # If we can, it's whatever it reported, always with a
+        # trailing /
+        directlyProvides(parent, ILocationInfo)
+        parent.getPath = lambda: '/root/parent'
+        dependable = self.factory(obj)
+        self.assertEqual('/root/parent/', dependable.pp)
+
+        parent.getPath = lambda: '/root/parent/'
+        dependable = self.factory(obj)
+        self.assertEqual('/root/parent/', dependable.pp)
+
+
+        dependable.addDependent('/root/parent/sibling/nephew')
+        dependents = list(dependable.dependents())
+        self.assertEqual(dependents, ['/root/parent/sibling/nephew'])
+
+
+class TestConfiguration(CleanUp, unittest.TestCase):
+
+    def test_configuration(self):
+        from zope.configuration import xmlconfig
+        xmlconfig.file('configure.zcml', package=zope.app.dependable)
 
 
 def test_suite():

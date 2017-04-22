@@ -26,6 +26,11 @@ def read(*rnames):
         return f.read()
 
 version = '4.0.0.dev0'
+tests_require = [
+    'zope.container',
+    'zope.testing',
+    'zope.testrunner',
+]
 
 setup(name='zope.app.dependable',
       version=version,
@@ -61,9 +66,10 @@ setup(name='zope.app.dependable',
       packages=find_packages('src'),
       package_dir={'': 'src'},
       namespace_packages=['zope', 'zope.app'],
-      extras_require=dict(test=[
-          'zope.testrunner',
-      ]),
+      extras_require={
+          'test': tests_require,
+      },
+      tests_require=tests_require,
       install_requires=[
           'setuptools',
           'zope.annotation',
