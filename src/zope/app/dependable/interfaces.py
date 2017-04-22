@@ -12,9 +12,8 @@
 #
 ##############################################################################
 """Dependable framework interfaces
-
-$Id$
 """
+
 __docformat__ = 'restructuredtext'
 
 from zope.interface import Interface

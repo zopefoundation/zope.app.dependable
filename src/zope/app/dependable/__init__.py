@@ -13,11 +13,11 @@
 ##############################################################################
 """Dependable Framework.
 
-$Id$
 """
+
 __docformat__ = 'restructuredtext'
 
-from zope.interface import implements
+from zope.interface import implementer
 from zope.traversing.api import getParent, canonicalPath, getPath
 from zope.annotation.interfaces import IAnnotations
 
@@ -37,6 +37,7 @@ class PathSetAnnotation(object):
             parent = getParent(self.context)
         except TypeError:
             parent = None
+
         if parent is not None:
             try:
                 pp = getPath(parent)
@@ -53,7 +54,7 @@ class PathSetAnnotation(object):
         path = self._make_relative(path)
         annotations = IAnnotations(self.context)
         old = annotations.get(self.key, ())
-        fixed = map(self._make_relative, old)
+        fixed = [self._make_relative(o) for o in old]
         if path not in fixed:
             fixed.append(path)
         new = tuple(fixed)
@@ -65,7 +66,7 @@ class PathSetAnnotation(object):
         annotations = IAnnotations(self.context)
         old = annotations.get(self.key, ())
         if old:
-            fixed = map(self._make_relative, old)
+            fixed = [self._make_relative(o) for o in old]
             fixed = [loc for loc in fixed if loc != path]
             new = tuple(fixed)
             if new != old:
@@ -84,8 +85,15 @@ class PathSetAnnotation(object):
             path = canonicalPath(path)
             if path.startswith(self.pp):
                 path = path[self.pplen:]
-                while path.startswith("/"):
-                    path = path[1:]
+                # Now, the path should not actually begin with a /.
+                # canonicalPath doesn't allow trailing / in a path
+                # segment, and we already cut off the whole length of
+                # the parent, which we guaranteed to begin and end
+                # with a /. But it's possible that older dependencies
+                # than we test with could produce this scenario, so we
+                # leave it for BWC.
+                path = path.lstrip("/")
+
         return path
 
     def _make_absolute(self, path):
@@ -93,11 +101,9 @@ class PathSetAnnotation(object):
             path = self.pp + path
         return path
 
-
+@implementer(IDependable)
 class Dependable(PathSetAnnotation):
     """See `IDependable`."""
-
-    implements(IDependable)
 
     key = "zope.app.dependable.Dependents"
 

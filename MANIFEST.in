@@ -2,7 +2,7 @@ include *.rst
 include *.txt
 include tox.ini
 include bootstrap.py
-include buildout.cfg
+include *.cfg
 
 recursive-include src *
 
