@@ -85,12 +85,15 @@ class PathSetAnnotation(object):
             path = canonicalPath(path)
             if path.startswith(self.pp):
                 path = path[self.pplen:]
-                while path.startswith("/"): # pragma: no cover
-                    # We should not be able to get here. canonicalPath
-                    # doesn't allow trailing / in a path segment, and we
-                    # already cut off the whole length of the parent, which
-                    # we guaranteed to begin and end with a /
-                    path = path[1:]
+                # Now, the path should not actually begin with a /.
+                # canonicalPath doesn't allow trailing / in a path
+                # segment, and we already cut off the whole length of
+                # the parent, which we guaranteed to begin and end
+                # with a /. But it's possible that older dependencies
+                # than we test with could produce this scenario, so we
+                # leave it for BWC.
+                path = path.lstrip("/")
+
         return path
 
     def _make_absolute(self, path):
