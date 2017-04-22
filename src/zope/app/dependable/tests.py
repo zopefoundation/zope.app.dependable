@@ -93,5 +93,5 @@ def test_suite():
     return unittest.defaultTestLoader.loadTestsFromName(__name__)
 
 
-if __name__=='__main__':
+if __name__=='__main__': # pragma: no cover
     unittest.main(defaultTest='test_suite')
