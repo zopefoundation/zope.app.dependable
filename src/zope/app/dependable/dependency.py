@@ -16,7 +16,7 @@
 on an object having dependencies. It raises an exception if it's the
 case.
 """
-from __future__ import print_function, absolute_import, division
+
 
 __docformat__ = 'restructuredtext'
 

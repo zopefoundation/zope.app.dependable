@@ -13,7 +13,7 @@
 ##############################################################################
 """Dependable framework interfaces
 """
-from __future__ import print_function, absolute_import, division
+
 __docformat__ = 'restructuredtext'
 
 from zope.interface import Interface

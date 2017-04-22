@@ -54,7 +54,7 @@ setup(name='zope.app.dependable',
           'Natural Language :: English',
           'Operating System :: OS Independent',
           'Topic :: Internet :: WWW/HTTP',
-          'Framework :: Zope3'
+          'Framework :: Zope3',
       ],
       url='http://github.com/zopefoundation/zope.app.dependable',
       license='ZPL 2.1',

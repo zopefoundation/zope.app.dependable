@@ -13,7 +13,7 @@
 ##############################################################################
 """Unit tests for Dependable class.
 """
-from __future__ import print_function, absolute_import, division
+
 import unittest
 
 from zope.annotation.attribute import AttributeAnnotations
