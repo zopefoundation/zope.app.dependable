@@ -5,11 +5,11 @@ CHANGES
 4.0.0 (unreleased)
 ------------------
 
-- Add support for Python 3.5 and 3.6 and PyPy.
+- Add support for Python 3.4, 3.5, and 3.6 and PyPy.
 
 - Removed support for Python 2.6.
 
-- Added `tox.ini` and manifest.
+- Added ``tox.ini`` and manifest.
 
 - Removed zope.app.testing dependency.
 
