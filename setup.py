@@ -25,7 +25,7 @@ def read(*rnames):
     with open(os.path.join(os.path.dirname(__file__), *rnames)) as f:
         return f.read()
 
-version = '4.1.0.dev0'
+version = '4.1.0'
 tests_require = [
     'zope.container',
     'zope.testing',
