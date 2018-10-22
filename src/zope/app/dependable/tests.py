@@ -56,7 +56,7 @@ class TestDependable(unittest.TestCase):
 
     def testBasic(self):
         dependable = self.factory()
-        self.failIf(dependable.dependents())
+        self.assertFalse(dependable.dependents())
         dependable.addDependent('/a/b')
         dependable.addDependent('/c/d')
         dependable.addDependent('/c/e')
@@ -101,8 +101,7 @@ class TestDependable(unittest.TestCase):
         parent.__name__ = 'parent'
         parent.__parent__ = grandparent
 
-        obj = AttributeAnnotations(C())
-        obj.__parent__ = parent
+        obj = AttributeAnnotations(parent)
         obj.__name__ = 'obj'
 
         from zope.traversing.api import getPath
