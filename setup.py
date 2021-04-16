@@ -21,9 +21,11 @@
 import os
 from setuptools import setup, find_packages
 
+
 def read(*rnames):
     with open(os.path.join(os.path.dirname(__file__), *rnames)) as f:
         return f.read()
+
 
 version = '4.1.1.dev0'
 tests_require = [
@@ -41,7 +43,7 @@ setup(name='zope.app.dependable',
           read('README.rst')
           + '\n\n' +
           read('CHANGES.rst')
-          ),
+      ),
       keywords="zope3 dependency",
       classifiers=[
           'Development Status :: 5 - Production/Stable',
@@ -56,6 +58,7 @@ setup(name='zope.app.dependable',
           'Programming Language :: Python :: 3.6',
           'Programming Language :: Python :: 3.7',
           'Programming Language :: Python :: 3.8',
+          'Programming Language :: Python :: 3.9',
           'Programming Language :: Python :: Implementation :: CPython',
           'Programming Language :: Python :: Implementation :: PyPy',
           'Natural Language :: English',

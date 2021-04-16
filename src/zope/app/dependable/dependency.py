@@ -35,6 +35,7 @@ is not possible !
 You must deactivate this object before trying to remove it.
 """)
 
+
 def CheckDependency(event):
     object = event.object
     dependency = IDependable(object, None)
@@ -44,5 +45,5 @@ def CheckDependency(event):
             mapping = {
                 "object": ILocationInfo(object).getPath(),
                 "dependents": ", ".join(dependents)
-                }
+            }
             raise DependencyError(Message(exception_msg, mapping=mapping))
