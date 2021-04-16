@@ -19,6 +19,7 @@ __docformat__ = 'restructuredtext'
 from zope.interface import Interface
 from zope.exceptions.interfaces import UserError
 
+
 class IDependable(Interface):
     """Objects that other objects depend on.
 
@@ -38,6 +39,7 @@ class IDependable(Interface):
     def dependents():
         """Return a sequence of dependent object locations.
         """
+
 
 class DependencyError(UserError):
     """ This object is dependable"""

@@ -23,6 +23,7 @@ from zope.annotation.interfaces import IAnnotations
 
 from zope.app.dependable.interfaces import IDependable
 
+
 class PathSetAnnotation(object):
     """Abstract base class for annotations that are sets of paths.
 
@@ -45,7 +46,7 @@ class PathSetAnnotation(object):
                 pp = ""
             if not pp.endswith("/"):
                 pp += "/"
-            self.pp = pp # parentpath
+            self.pp = pp  # parentpath
         else:
             self.pp = ""
         self.pplen = len(self.pp)
@@ -100,6 +101,7 @@ class PathSetAnnotation(object):
         if not path.startswith("/") and self.pp:
             path = self.pp + path
         return path
+
 
 @implementer(IDependable)
 class Dependable(PathSetAnnotation):

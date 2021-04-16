@@ -21,8 +21,6 @@ from zope.location.interfaces import ILocationInfo
 from zope.interface import implementer, verify, directlyProvides
 from zope.lifecycleevent import ObjectRemovedEvent
 
-from zope.location.interfaces import ILocationInfo
-
 from zope.testing.cleanup import CleanUp
 
 import zope.app.dependable
@@ -48,7 +46,10 @@ class TestDependable(unittest.TestCase):
 
     def factory(self, obj=None):
         from zope.app.dependable import Dependable
-        return Dependable(obj if obj is not None else AttributeAnnotations(C()))
+        return Dependable(
+            obj
+            if obj is not None
+            else AttributeAnnotations(C()))
 
     def testVerifyInterface(self):
         object = self.factory()
@@ -61,8 +62,7 @@ class TestDependable(unittest.TestCase):
         dependable.addDependent('/c/d')
         dependable.addDependent('/c/e')
         dependable.addDependent('/c/d')
-        dependents = list(dependable.dependents())
-        dependents.sort()
+        dependents = sorted(dependable.dependents())
         self.assertEqual(dependents, ['/a/b', '/c/d', '/c/e'])
         dependable.removeDependent('/c/d')
         dependents = list(dependable.dependents())
@@ -104,8 +104,6 @@ class TestDependable(unittest.TestCase):
         obj = AttributeAnnotations(parent)
         obj.__name__ = 'obj'
 
-        from zope.traversing.api import getPath
-
         # If we can't get the parent path, it's just /
         dependable = self.factory(obj)
         self.assertEqual('/', dependable.pp)
@@ -121,7 +119,6 @@ class TestDependable(unittest.TestCase):
         dependable = self.factory(obj)
         self.assertEqual('/root/parent/', dependable.pp)
 
-
         dependable.addDependent('/root/parent/sibling/nephew')
         dependents = list(dependable.dependents())
         self.assertEqual(dependents, ['/root/parent/sibling/nephew'])
@@ -136,7 +133,3 @@ class TestConfiguration(CleanUp, unittest.TestCase):
 
 def test_suite():
     return unittest.defaultTestLoader.loadTestsFromName(__name__)
-
-
-if __name__=='__main__': # pragma: no cover
-    unittest.main(defaultTest='test_suite')
