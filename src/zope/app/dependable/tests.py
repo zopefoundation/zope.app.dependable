@@ -30,12 +30,12 @@ from zope.app.dependable.interfaces import DependencyError
 from zope.app.dependable.interfaces import IDependable
 
 
-class C(object):
+class C:
     pass
 
 
 @implementer(IDependable, ILocationInfo)
-class DummyObject(object):
+class DummyObject:
 
     def dependents(self):
         return ['dependency1', 'dependency2']

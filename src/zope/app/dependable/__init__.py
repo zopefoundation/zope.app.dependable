@@ -26,7 +26,7 @@ from zope.traversing.api import getPath
 from zope.app.dependable.interfaces import IDependable
 
 
-class PathSetAnnotation(object):
+class PathSetAnnotation:
     """Abstract base class for annotations that are sets of paths.
 
     To make this into a concrete class, a subclass must set the class
