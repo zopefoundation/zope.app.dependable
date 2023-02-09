@@ -17,9 +17,11 @@
 
 __docformat__ = 'restructuredtext'
 
-from zope.interface import implementer
-from zope.traversing.api import getParent, canonicalPath, getPath
 from zope.annotation.interfaces import IAnnotations
+from zope.interface import implementer
+from zope.traversing.api import canonicalPath
+from zope.traversing.api import getParent
+from zope.traversing.api import getPath
 
 from zope.app.dependable.interfaces import IDependable
 

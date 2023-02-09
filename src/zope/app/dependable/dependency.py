@@ -24,7 +24,9 @@ from zope.i18nmessageid import Message
 from zope.i18nmessageid import MessageFactory
 from zope.location.interfaces import ILocationInfo
 
-from zope.app.dependable.interfaces import IDependable, DependencyError
+from zope.app.dependable.interfaces import DependencyError
+from zope.app.dependable.interfaces import IDependable
+
 
 _ = MessageFactory('zope')
 
