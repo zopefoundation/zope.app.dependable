@@ -17,23 +17,25 @@
 import unittest
 
 from zope.annotation.attribute import AttributeAnnotations
-from zope.location.interfaces import ILocationInfo
-from zope.interface import implementer, verify, directlyProvides
+from zope.interface import directlyProvides
+from zope.interface import implementer
+from zope.interface import verify
 from zope.lifecycleevent import ObjectRemovedEvent
-
+from zope.location.interfaces import ILocationInfo
 from zope.testing.cleanup import CleanUp
 
 import zope.app.dependable
 from zope.app.dependable.dependency import CheckDependency
-from zope.app.dependable.interfaces import IDependable, DependencyError
+from zope.app.dependable.interfaces import DependencyError
+from zope.app.dependable.interfaces import IDependable
 
 
-class C(object):
+class C:
     pass
 
 
 @implementer(IDependable, ILocationInfo)
-class DummyObject(object):
+class DummyObject:
 
     def dependents(self):
         return ['dependency1', 'dependency2']

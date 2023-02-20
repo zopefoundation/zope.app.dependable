@@ -16,8 +16,8 @@
 
 __docformat__ = 'restructuredtext'
 
-from zope.interface import Interface
 from zope.exceptions.interfaces import UserError
+from zope.interface import Interface
 
 
 class IDependable(Interface):
